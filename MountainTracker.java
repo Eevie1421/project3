@@ -49,6 +49,9 @@ public class MountainTracker extends JPanel implements ActionListener{
         setVisible(true);
     }
 
+    /**
+     * start - Creates a Hiker object for each hiker, writes their info to text, adds them to stacks of ten, and randomly assigns each group a trail.
+     */
     private void start(){
         //For purpose of simulator we will use a file of randomly generated names
         Scanner scnr = new Scanner("hikerTest");
@@ -58,6 +61,8 @@ public class MountainTracker extends JPanel implements ActionListener{
             String tempName = scnr.next();
             Hiker temp = new Hiker(tempName, hikerNum);
             group.stackPush(temp);
+            txt.setText(temp.toString());
+            txt.repaint();
             hikerNum++;
             if(group.getCapacity() == 10){
                 Double trail = Math.random() * 100;
