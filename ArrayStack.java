@@ -1,4 +1,4 @@
-/* Evelyn Totman.
+/*Evelyn Totman.
  * ArrayStack: Implements Stack ADT using array.
  * ArrayStack is implemented with an initial size given by the user or 2 if none is given.
  */

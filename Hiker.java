@@ -14,7 +14,6 @@ public class Hiker {
     }
 
     public String getName() {
-        ArrayStack<Integer> test = new ArrayStack<>(2);
         return name;
     }
 
