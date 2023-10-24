@@ -95,4 +95,10 @@ public class ArrayStack<E>{
         capacity = newCap;
     }
 
+    /**
+     * @return - returns size of stack.
+     */
+    public int size(){
+        return size;
+    }
 }
