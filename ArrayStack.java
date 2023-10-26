@@ -91,7 +91,7 @@ public class ArrayStack<E> {
     /**
      * reallocate - Creates stack of size * 2 and reallocates data of old stack to new stack.
      */
-    public void reallocate(){
+    private void reallocate(){
         int newCap = capacity * 2;
         E[] resized = (E[])(new Object[newCap]);
         for(int i = 0; i < capacity; i++){

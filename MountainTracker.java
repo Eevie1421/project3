@@ -62,10 +62,59 @@ public class MountainTracker {
      * the name at the index from an array of different options
      * @return - random name.
      */
-    public String randName(){
+    private String randName(){
         int index;
         index = (int)(Math.random() * 100);
         return nameOpts[index];
+    }
+
+    /**
+     * Checks the trails for any parties less than ten members and sends them to the back of the line for their trail.
+     */
+    private void trailSort(){
+        LinkedList<ArrayStack<Hiker>> lowVals1 = new LinkedList<>();
+        LinkedList<ArrayStack<Hiker>> lowVals2 = new LinkedList<>();
+        LinkedList<ArrayStack<Hiker>> lowVals3 = new LinkedList<>();
+        ArrayStack<Hiker> temp;
+        for(int i = 0; i < trail1.size(); i++){
+            temp = trail1.poll();
+            if(temp.size() < 10){
+                lowVals1.offer(temp);
+            }
+            else{
+                trail1.offer(temp);
+            }
+        }
+        for(int i = 0; i < trail2.size(); i++){
+            temp = trail2.poll();
+            if(temp.size() < 10){
+                lowVals2.offer(temp);
+            }
+            else{
+                trail2.offer(temp);
+            }
+        }
+        for(int i = 0; i < trail3.size(); i++){
+            temp = trail3.poll();
+            if(temp.size() < 10){
+                lowVals3.offer(temp);
+            }
+            else{
+                trail3.offer(temp);
+            }
+        }
+        while(!lowVals1.isEmpty()){
+            temp = lowVals1.poll();
+            trail1.offer(temp);
+        }
+        while(!lowVals2.isEmpty()){
+            temp = lowVals2.poll();
+            trail2.offer(temp);
+        }
+        while(!lowVals3.isEmpty()){
+            temp = lowVals3.poll();
+            trail3.offer(temp);
+        }
     }
 
     /**
@@ -108,6 +157,7 @@ public class MountainTracker {
      * Takes the stacks from each trail and prints their name to a file keeping track of the total of each trail.
      */
     public void openTrails(){
+        trailSort();
         try{
             File output = new File(nameList);
             PrintWriter pw = new PrintWriter(output);
