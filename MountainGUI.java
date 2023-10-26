@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedList;
 
 public class MountainGUI extends JPanel implements ActionListener {
     //Using two filenames which do not exist and a file which contains random names to test MountainTracker.
@@ -9,20 +10,23 @@ public class MountainGUI extends JPanel implements ActionListener {
     private Button start;
     private Button open;
     private Button close;
-    private JTextField txt;
+    private JTextArea txt;
 
     public MountainGUI(){
         setSize(new Dimension(900, 900));
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        test = new MountainTracker("file1", "file2", "nametest");
+        test = new MountainTracker("file1", "file2", "names.txt");
         start = new Button("Start");
+        start.addActionListener(this);
         start.setPreferredSize(new Dimension(300, 300));
         open = new Button("Open Trails");
+        open.addActionListener(this);
         open.setPreferredSize(new Dimension(300, 300));
         close = new Button("Close Trails");
+        close.addActionListener(this);
         close.setPreferredSize(new Dimension(300, 300));
-        txt = new JTextField("Click Start to begin day");
+        txt = new JTextArea("Click Start to begin day");
         txt.setPreferredSize(new Dimension(900, 600));
 
         c.gridx = 0;
@@ -41,14 +45,25 @@ public class MountainGUI extends JPanel implements ActionListener {
 
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        if(e.equals(start)){
+    public void actionPerformed(ActionEvent e){
+        if(e.getSource().equals(start)){
             test.start();
+            String outputBuffer = "Todays hikers are: ";
+            LinkedList<String> hikers = test.getTxtBffr();
+            while(!hikers.isEmpty()){
+                for(int i = 0; i < 5; i++){
+                    if(!hikers.isEmpty()){
+                        outputBuffer = outputBuffer + hikers.poll() + ", ";
+                    }
+                }
+                outputBuffer = outputBuffer + "\n";
+            }
+            txt.setText(outputBuffer);
         }
-        else if(e.equals(open)){
+        else if(e.getSource().equals(open)){
             test.openTrails();
         }
-        else if(e.equals(close)){
+        else if(e.getSource().equals(close)){
             test.closeTrails();
 
         }

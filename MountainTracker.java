@@ -29,15 +29,12 @@ public class MountainTracker {
     private int trail1Total;
     private int trail2Total;
     private int trail3Total;
+    private LinkedList<String> txtBffr;
     private LinkedList<String> allHikers;
-    public MountainTracker(String output1, String output2, String nameFile){
+    public MountainTracker(String output1, String output2, String nameInput){
         nameOpts = new String[100];
-        int i = 0;
-        Scanner scnr = new Scanner(nameFile);
-        while (scnr.hasNext() && i < 100){
-            nameOpts[i] = scnr.next();
-            i++;
-        }
+        txtBffr = new LinkedList<>();
+        allHikers = new LinkedList<>();
         nameList = new File(output1);
         endOfDayList = new File(output2);
         trail1 = new LinkedList<>();
@@ -46,6 +43,18 @@ public class MountainTracker {
         trail1Total = 0;
         trail2Total = 0;
         trail3Total = 0;
+        totalVisitors = 0;
+        try{
+            int i = 0;
+            File nameFile = new File(nameInput);
+            Scanner scnr = new Scanner(nameFile);
+            while (scnr.hasNext() && i < 100){
+                nameOpts[i] = scnr.nextLine();
+                i++;
+            }
+        } catch(FileNotFoundException e){
+            System.out.println("Put in a proper name file dummy!");
+        }
     }
 
     /**
@@ -71,6 +80,7 @@ public class MountainTracker {
             for(int i = 0; i < 10; i++){
                 totalVisitors++;
                 temp.stackPush(new Hiker(randName(), totalVisitors));
+                txtBffr.offer(temp.stackPeek().toString());
                 if(totalVisitors == totalHikers){
                     if(trailNum == 1){
                         trail1.offer(temp);
@@ -81,6 +91,15 @@ public class MountainTracker {
                     }
                     break;
                 }
+            }
+            if(trailNum == 1){
+                trail1.offer(temp);
+            }
+            else if(trailNum == 2){
+                trail2.offer(temp);
+            }
+            else{
+                trail3.offer(temp);
             }
         }
     }
@@ -180,5 +199,21 @@ public class MountainTracker {
 
     public int getTrail3Total() {
         return trail3Total;
+    }
+
+    public File getEndOfDayList() {
+        return endOfDayList;
+    }
+
+    public File getNameList() {
+        return nameList;
+    }
+
+    public LinkedList<String> getAllHikers() {
+        return allHikers;
+    }
+
+    public LinkedList<String> getTxtBffr() {
+        return txtBffr;
     }
 }

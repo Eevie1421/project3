@@ -44,6 +44,7 @@ public class ArrayStack<E>{
         }
         topIndex++;
         stack[topIndex] = item;
+        size++;
     }
 
     /**
@@ -66,8 +67,12 @@ public class ArrayStack<E>{
      * @return - returns true if empty
      */
     public boolean stackEmpty(){
-        if(size == 0) return true;
-        else return false;
+        if(size == 0){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     /**
@@ -92,7 +97,9 @@ public class ArrayStack<E>{
         for(int i = 0; i < capacity; i++){
             resized[i] = stack[i];
         }
+        topIndex = capacity;
         capacity = newCap;
+        stack = resized;
     }
 
     /**
