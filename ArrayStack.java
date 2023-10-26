@@ -5,7 +5,7 @@
 
 import java.util.EmptyStackException;
 
-public class ArrayStack<E>{
+public class ArrayStack<E> {
     private E[] stack;
     private int capacity;
     private int topIndex;

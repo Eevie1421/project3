@@ -1,3 +1,9 @@
+/* MountainGUI - Evelyn Totman
+ * Creates a GUI window with three buttons and a text box. when the buttons are clicked they
+ * call the corresponding method in MountainTracker and display the relevant information.
+ * When the program completes one cycle it should print the names of all hikers to one output file
+ * and the names of hikers randomized to another.
+ */
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -5,7 +11,6 @@ import java.awt.event.ActionListener;
 import java.util.LinkedList;
 
 public class MountainGUI extends JPanel implements ActionListener {
-    //Using two filenames which do not exist and a file which contains random names to test MountainTracker.
     private MountainTracker test;
     private Button start;
     private Button open;
@@ -16,7 +21,8 @@ public class MountainGUI extends JPanel implements ActionListener {
         setSize(new Dimension(900, 900));
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        test = new MountainTracker("file1", "file2", "names.txt");
+        //test values for files.
+        test = new MountainTracker("file1.txt", "file2.txt", "names.txt");
         start = new Button("Start");
         start.addActionListener(this);
         start.setPreferredSize(new Dimension(300, 300));
@@ -62,10 +68,13 @@ public class MountainGUI extends JPanel implements ActionListener {
         }
         else if(e.getSource().equals(open)){
             test.openTrails();
+            txt.setText("Letting hikers onto trails....");
         }
         else if(e.getSource().equals(close)){
             test.closeTrails();
-
+            txt.setText("Trail1 total: " + test.getTrail1Total() + '\n' +
+                        "Trail2 total: " + test.getTrail2Total() + '\n' +
+                        "Trail3 total: " + test.getTrail3Total() + '\n');
         }
     }
 

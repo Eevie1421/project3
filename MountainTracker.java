@@ -23,8 +23,8 @@ public class MountainTracker {
     private LinkedList<ArrayStack<Hiker>> trail2;
     private LinkedList<ArrayStack<Hiker>> trail3;
     private String[] nameOpts;
-    private File nameList;
-    private File endOfDayList;
+    private String nameList;
+    private String endOfDayList;
     private int totalVisitors;
     private int trail1Total;
     private int trail2Total;
@@ -35,8 +35,8 @@ public class MountainTracker {
         nameOpts = new String[100];
         txtBffr = new LinkedList<>();
         allHikers = new LinkedList<>();
-        nameList = new File(output1);
-        endOfDayList = new File(output2);
+        nameList = output1;
+        endOfDayList = output2;
         trail1 = new LinkedList<>();
         trail2 = new LinkedList<>();
         trail3 = new LinkedList<>();
@@ -109,50 +109,32 @@ public class MountainTracker {
      */
     public void openTrails(){
         try{
-            PrintWriter pw = new PrintWriter(nameList);
+            File output = new File(nameList);
+            PrintWriter pw = new PrintWriter(output);
             while(!trail1.isEmpty()){
                 ArrayStack<Hiker> temp = trail1.poll();
-                if(temp.size() != 10 && !trail1.isEmpty()){
-                    trail1.offer(temp);
-                }
-                else{
-                    while(!temp.stackEmpty()){
-                        pw.println(temp.stackPop().toString());
-                        trail1Total++;
-                    }
+                while (!temp.stackEmpty()){
+                    pw.println(temp.stackPop().toString());
+                    trail1Total++;
                 }
             }
             while (!trail2.isEmpty()){
                 ArrayStack<Hiker> temp = trail2.poll();
-                if(temp.size() != 10 && !trail2.isEmpty()){
-                    trail2.offer(temp);
-                }
-                else{
-                    while(!temp.stackEmpty()){
-                        pw.println(temp.stackPop().toString());
-                        trail2Total++;
-                    }
+                while (!temp.stackEmpty()){
+                    pw.println(temp.stackPop().toString());
+                    trail2Total++;
                 }
             }
             while(!trail3.isEmpty()){
                 ArrayStack<Hiker> temp = trail3.poll();
-                if(temp.size() != 10 && !trail3.isEmpty()){
-                    trail3.offer(temp);
-                }
-                else{
-                    while(!temp.stackEmpty()){
-                        pw.println(temp.stackPop().toString());
-                        trail3Total++;
-                    }
+                while (!temp.stackEmpty()){
+                    pw.println(temp.stackPop().toString());
+                    trail3Total++;
                 }
             }
             pw.close();
         } catch(FileNotFoundException e){
             System.out.println(e.getMessage());
-            System.out.println("Enter new file: ");
-            Scanner scnr = new Scanner(System.in);
-            nameList = new File(scnr.next());
-            openTrails();
         }
     }
 
@@ -163,8 +145,10 @@ public class MountainTracker {
      */
     public void closeTrails(){
         try{
-            Scanner scnr = new Scanner(nameList);
-            PrintWriter pw = new PrintWriter(endOfDayList);
+            File input = new File(nameList);
+            File output = new File(endOfDayList);
+            Scanner scnr = new Scanner(input);
+            PrintWriter pw = new PrintWriter(output);
             String buffer;
             while(scnr.hasNext()){
                 buffer = scnr.nextLine();
@@ -201,11 +185,11 @@ public class MountainTracker {
         return trail3Total;
     }
 
-    public File getEndOfDayList() {
+    public String getEndOfDayList() {
         return endOfDayList;
     }
 
-    public File getNameList() {
+    public String getNameList() {
         return nameList;
     }
 
